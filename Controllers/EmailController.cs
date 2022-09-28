@@ -5,6 +5,7 @@ using MimeKit;
 using MailKit.Security;
 using MimeKit.Text;
 
+
 namespace SimpleEmailApplication.Controllers
 {
     [Route("api/[controller]")]
@@ -21,8 +22,18 @@ namespace SimpleEmailApplication.Controllers
         [HttpPost]
         public IActionResult SendEmail(EmailDto request)
         {
-            _emailService.SendEmail(request);
-            return Ok();
+            try {
+                _emailService.SendEmail(request);
+            //return Ok();
+                   return Ok(new{
+                        StatusCode = StatusCode(200)
+                   });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            
 
         }
     }
