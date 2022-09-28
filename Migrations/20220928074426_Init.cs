@@ -15,6 +15,8 @@ namespace SimpleEmailApplication.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     To = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Subject = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Body = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     OTP = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>

@@ -11,7 +11,7 @@ using SimpleEmailApplication.Data;
 namespace SimpleEmailApplication.Migrations
 {
     [DbContext(typeof(EmailVerificationDbContext))]
-    [Migration("20220928052330_Init")]
+    [Migration("20220928074426_Init")]
     partial class Init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

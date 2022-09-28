@@ -12,14 +12,13 @@ namespace SimpleEmailApplication.Controllers
     [ApiController]
     public class EmailController : ControllerBase
     {
-
-
-
+        private readonly EmailVerificationDbContext _context;
         private readonly IEmailService _emailService;
 
-        public EmailController(IEmailService emailService)
+        public EmailController(IEmailService emailService, EmailVerificationDbContext context)
         {
             _emailService = emailService;
+            _context = context;
         }
 
         [HttpPost]
@@ -27,15 +26,18 @@ namespace SimpleEmailApplication.Controllers
         {
             try {
 
-                //Update Database
-                
+                //Update Database for Otp and the email
+                _context.EmailDtos.Add(new EmailDto { 
+                    Id = request.Id,
+                    To = request.To,
+                    Subject = null,
+                    Body = null,
+                    OTP = request.OTP
+                });
+                _context.SaveChanges();
 
-                //To send the email
+                //Ailey Ethereal ko server is down so yo chaldaina
                 _emailService.SendEmail(request);
-
-                
-
-
                 //return Ok();
                 return Ok(new{
                     StatusCode = StatusCode(200)
