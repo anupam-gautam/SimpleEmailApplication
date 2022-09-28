@@ -25,7 +25,7 @@ namespace SimpleEmailApplication.Services.EmailServices
                 using var smtp = new SmtpClient();
                 smtp.Connect(_config.GetSection("SmtpConfiguration").GetSection("EmailHost").Value, 587, SecureSocketOptions.StartTls);
                 smtp.Authenticate(_config.GetSection("SmtpConfiguration").GetSection("EmailUsername").Value, _config.GetSection("EmailPassword").Value);
-                smtp.Send(email);
+                smtp.Send(email);   
                 smtp.Disconnect(true);
             
         }

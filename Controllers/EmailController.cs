@@ -12,6 +12,9 @@ namespace SimpleEmailApplication.Controllers
     [ApiController]
     public class EmailController : ControllerBase
     {
+
+
+
         private readonly IEmailService _emailService;
 
         public EmailController(IEmailService emailService)
@@ -23,11 +26,20 @@ namespace SimpleEmailApplication.Controllers
         public IActionResult SendEmail(EmailDto request)
         {
             try {
+
+                //Update Database
+                
+
+                //To send the email
                 _emailService.SendEmail(request);
-            //return Ok();
-                   return Ok(new{
-                        StatusCode = StatusCode(200)
-                   });
+
+                
+
+
+                //return Ok();
+                return Ok(new{
+                    StatusCode = StatusCode(200)
+                });
             }
             catch (Exception ex)
             {
