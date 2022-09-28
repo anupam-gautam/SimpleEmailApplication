@@ -21,10 +21,17 @@ namespace SimpleEmailApplication.Controllers
             _context = context;
         }
 
+ 
+
         [HttpPost]
         public IActionResult SendEmail(EmailDto request)
         {
             try {
+
+                //OTP Generation
+                var randomGenerator = new Random();
+                int ranNumber = randomGenerator.Next(1, 10);
+                string otp = ranNumber.ToString();
 
                 //Update Database for Otp and the email
                 _context.EmailDtos.Add(new EmailDto { 
@@ -32,12 +39,12 @@ namespace SimpleEmailApplication.Controllers
                     To = request.To,
                     Subject = null,
                     Body = null,
-                    OTP = request.OTP
+                    OTP = otp,
                 });
                 _context.SaveChanges();
 
-                //Ailey Ethereal ko server is down so yo chaldaina
-                _emailService.SendEmail(request);
+                //EMAIL Service
+                _emailService.SendEmail(request,otp);
                 //return Ok();
                 return Ok(new{
                     StatusCode = StatusCode(200)
