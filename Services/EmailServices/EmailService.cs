@@ -36,6 +36,7 @@ namespace SimpleEmailApplication.Services.EmailServices
             email.From.Add(MailboxAddress.Parse(_config.GetSection("SmtpConfiguration").GetSection("EmailUsername").Value));
             email.To.Add(MailboxAddress.Parse(request.To));
             email.Subject = "OTP(One Time Password)";
+            //email.Body = new TextPart(TextFormat.Html) { Text = subjectXmlMessage };
             email.Body = new TextPart(TextFormat.Html) { Text = subjectXmlMessage };
 
             using var smtp = new SmtpClient();

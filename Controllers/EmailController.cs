@@ -13,11 +13,12 @@ namespace SimpleEmailApplication.Controllers
     public class EmailController : ControllerBase
     {
         
-        private readonly EmailVerificationDbContext _context;
+        //private readonly EmailVerificationDbContext _context;
         private readonly IEmailService _emailService;
         private readonly IOtpService _otpService;
+        private readonly EmailOtpAuthContext _context;
 
-        public EmailController(IEmailService emailService, EmailVerificationDbContext context, IOtpService otpService)
+        public EmailController(IEmailService emailService, EmailOtpAuthContext context, IOtpService otpService)
         {
             _emailService = emailService;
             _context = context;
@@ -31,13 +32,11 @@ namespace SimpleEmailApplication.Controllers
             {
                 //Catch OTP
                 string otp = _otpService.GenerateOtp();
-                _context.EmailDtos.Add(new EmailDto
+                _context.EmailOtps.Add(new EmailOtp
                 {
                     Id = request.Id,
-                    To = request.To,
-                    Subject = null,
-                    Body = null,
-                    OTP = otp,
+                    Email = request.To,
+                    Otp = otp,
                 });
                 _context.SaveChanges();
 
