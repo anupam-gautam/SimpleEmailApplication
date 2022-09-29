@@ -12,29 +12,27 @@ namespace SimpleEmailApplication.Controllers
     [ApiController]
     public class EmailController : ControllerBase
     {
+        
         private readonly EmailVerificationDbContext _context;
         private readonly IEmailService _emailService;
+        private readonly IOtpService _otpService;
 
-        public EmailController(IEmailService emailService, EmailVerificationDbContext context)
+        public EmailController(IEmailService emailService, EmailVerificationDbContext context, IOtpService otpService)
         {
             _emailService = emailService;
             _context = context;
+            _otpService = otpService;
         }
-
- 
 
         [HttpPost]
         public IActionResult SendEmail(EmailDto request)
         {
-            try {
-
-                //OTP Generation
-                var randomGenerator = new Random();
-                int ranNumber = randomGenerator.Next(1, 10);
-                string otp = ranNumber.ToString();
-
-                //Update Database for Otp and the email
-                _context.EmailDtos.Add(new EmailDto { 
+            try
+            {
+                //Catch OTP
+                string otp = _otpService.GenerateOtp();
+                _context.EmailDtos.Add(new EmailDto
+                {
                     Id = request.Id,
                     To = request.To,
                     Subject = null,
@@ -44,17 +42,19 @@ namespace SimpleEmailApplication.Controllers
                 _context.SaveChanges();
 
                 //EMAIL Service
-                _emailService.SendEmail(request,otp);
+                _emailService.SendEmail(request, otp);
                 //return Ok();
-                return Ok(new{
-                    StatusCode = StatusCode(200)
+                return Ok(new
+                {
+                    StatusCode = StatusCode(200),
+                    Model = request,
                 });
             }
             catch (Exception ex)
             {
                 return BadRequest(ex.Message);
             }
-            
+
 
         }
     }

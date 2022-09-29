@@ -2,7 +2,7 @@ global using SimpleEmailApplication.Services.EmailServices;
 global using SimpleEmailApplication.Models;
 global using SimpleEmailApplication.Data;
 global using Microsoft.EntityFrameworkCore;
-
+using SimpleEmailApplication.Services.OtpGeneration;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -19,6 +19,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<IEmailService, EmailService>();
+builder.Services.AddScoped<IOtpService, OtpService>();
 
 var app = builder.Build();
 
