@@ -4,6 +4,8 @@ global using SimpleEmailApplication.Data;
 global using Microsoft.EntityFrameworkCore;
 using SimpleEmailApplication.Services.OtpGeneration;
 
+using Microsoft.Extensions.FileProviders;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -39,6 +41,20 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+//HTML Form
+app.UseFileServer(new FileServerOptions
+{
+    FileProvider = new PhysicalFileProvider(
+                    Path.Combine(Directory.GetCurrentDirectory(), "StaticFiles")),
+    RequestPath = "/StaticFiles",
+    EnableDefaultFiles = true
+});
+
+//app.UseDefaultFiles();
+//app.UseStaticFiles();
+
+
 
 app.UseHttpsRedirection();
 

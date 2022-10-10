@@ -24,29 +24,33 @@ namespace SimpleEmailApplication.Controllers
             _context = context;
             _otpService = otpService;
         }
-
+        
+        [Route("SendEmail")]
         [HttpPost]
-        public IActionResult SendEmail(EmailDto request)
+        public IActionResult SendEmailInfo([FromBody] EmailDto model)
         {
             try
             {
+                //string email = "";
+               // EmailDto request = new EmailDto();
+               // request.To = email;
                 //Catch OTP
                 string otp = _otpService.GenerateOtp();
                 _context.EmailOtps.Add(new EmailOtp
                 {
-                    Id = request.Id,
-                    Email = request.To,
+                    Id = 0,
+                    Email = model.To,
                     Otp = otp,
                 });
                 _context.SaveChanges();
 
                 //EMAIL Service
-                _emailService.SendEmail(request, otp);
+                _emailService.SendEmail(model, otp);
                 //return Ok();
                 return Ok(new
                 {
                     StatusCode = StatusCode(200),
-                    Model = request,
+                    Model = model,
                 });
             }
             catch (Exception ex)
