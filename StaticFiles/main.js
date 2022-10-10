@@ -1,5 +1,5 @@
 ﻿function doRequest() {
-    
+
     //fetch("https://localhost:7043/api/Email/SendEmail", {
 
     //    // adding method type
@@ -28,16 +28,19 @@
 
 
 
-    $.ajax({
-        type: "POST",
-        url: "/api/Email/SendEmail",
-        data: JSON.stringify({ "To": "test@test.com"}),
-        contentType: 'application/json;charset=utf-8',
-        //success: alert("DONE"),
-        dataType: "json"
-    });
 
+        let inputValue = $('#email').val();
 
+        $.ajax({
+            type: "POST",
+            url: "/api/Email/SendEmail",
+            data: JSON.stringify({ "To": inputValue }),
+            contentType: 'application/json;charset=utf-8',
+            //success: alert("DONE"),
+            dataType: "json"
+        });
+
+        
 
 }
 
