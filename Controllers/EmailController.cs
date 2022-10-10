@@ -12,7 +12,7 @@ namespace SimpleEmailApplication.Controllers
     [ApiController]
     public class EmailController : ControllerBase
     {
-        
+
         //private readonly EmailVerificationDbContext _context;
         private readonly IEmailService _emailService;
         private readonly IOtpService _otpService;
@@ -24,17 +24,13 @@ namespace SimpleEmailApplication.Controllers
             _context = context;
             _otpService = otpService;
         }
-        
+
         [Route("SendEmail")]
         [HttpPost]
         public IActionResult SendEmailInfo([FromBody] EmailDto model)
         {
             try
             {
-                //string email = "";
-               // EmailDto request = new EmailDto();
-               // request.To = email;
-                //Catch OTP
                 string otp = _otpService.GenerateOtp();
                 _context.EmailOtps.Add(new EmailOtp
                 {
@@ -59,6 +55,19 @@ namespace SimpleEmailApplication.Controllers
             }
 
 
+        }
+
+        [Route("DbCheck")]
+        //to validate input in database records
+        public IActionResult DatabaseValidate(EmailDto model)
+        {
+            var dbItem = _context.EmailOtps;
+            var test = dbItem.ToList().Where(u => u.Email == model.To && u.Otp == model.OTP).FirstOrDefault();
+            if (test != null)
+            {
+                return Ok();
+            }
+            return BadRequest();
         }
     }
 }

@@ -3,6 +3,8 @@
 <head>
     <title>Simple login form</title>
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+    <script src="../StaticFiles/main.js"></script>
     <style>
         html, body {
             display: flex;
@@ -67,18 +69,15 @@
     </style>
 </head>
 <body>
-    <form action="/action_page.php">
-        <h1>Login Form</h1>
-        <div class="formcontainer">
-            <hr />
-            <div class="container">
-                <label for="email"><strong>Email</strong></label>
-                <input type="text" placeholder="Enter Email" name="email" required>
-                <label for="otp"><strong>OTP</strong></label>
-                <input type="number" placeholder="Enter OTP" name="otp" required>
-            </div>
-            <button type="submit">Login</button>
-            
-    </form>
+    <h1>User Verification</h1>
+    <div class="container">
+        <label for="email"><strong>Email</strong></label>
+        <input type="text" placeholder="Enter Email" name="email" id="dbemail">
+        <label for="otp"><strong>OTP</strong></label>
+        <input type="number" placeholder="Enter OTP" name="otp" id="dbotp">
+    </div>
+    <input type="button" onclick="ValidateUser()" value="submit">
+
+
 </body>
 </html>
