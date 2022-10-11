@@ -7,7 +7,26 @@
     <title></title>
 </head>
 <body>
-    <input type="button" onclick="returnPaginationData()" value="submit">
+    <h3>Email and OTP Table</h3>
+    <h4>Page to Load</h4>
+    <input type="number" id="pagetoload"/>
+    <input type="button" onclick="returnPaginationData()" value="Click to fetch records">
+    <br />
+    <hr />
+
+
+    <table>
+
+
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Email</th>
+                <th>OTP</th>
+            </tr>
+        </thead>
+        <tbody id="tBody"></tbody>
+    </table>
 
 </body>
 </html>

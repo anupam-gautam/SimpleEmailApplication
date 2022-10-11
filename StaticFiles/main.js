@@ -32,6 +32,7 @@ function ValidateUser() {
     });
 }
 
+
 function returnPaginationData() {
     
     try {
@@ -39,12 +40,45 @@ function returnPaginationData() {
             type: "GET",
             url: "/api/DbInfo/GetDbInfo",
             data: {
-                "page": 3
-            }, 
+                "page": 6
+            },
             dataType: "json",
             contentType: 'application/json;charset=utf-8',
             success: function (data) {
-                console.log(data);
+                debugger
+                
+                var trHTML = '';
+                
+                //foreach(i in data.emailOtps)
+                //{
+                //    trHTML +=
+                //        '<tr><td>'
+                //        + i.id
+                //        + '</td><td>'
+                //        + i.email
+                //        + '</td><td>'
+                //        + i.otp
+                //        + '</td></tr>';
+
+                //    $('#tBody').append(trHTML);
+
+                //}
+                
+                var i = 0;
+                for (i = 0; i < 3; i++) {
+                    trHTML =
+                        '<tr><td>'
+                        + data.emailOtps[i].id
+                        + '</td><td>'
+                        + data.emailOtps[i].email
+                        + '</td><td>'
+                        + data.emailOtps[i].otp
+                        + '</td></tr>';
+
+                    $('#tBody').append(trHTML);
+                    
+                }
+
             }
         });
     }
@@ -53,4 +87,4 @@ function returnPaginationData() {
     }
 
 
-    }
+}
