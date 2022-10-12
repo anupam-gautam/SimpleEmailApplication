@@ -34,6 +34,25 @@ namespace SimpleEmailApplication.Controllers
             return Ok(response);
         }
 
+        [HttpPost]
+        [Route("DatabaseSearch")]
+        public IActionResult DatabaseSearch(EmailDto model)
+        {
+
+            var dbItem = _context.EmailOtps;
+            var test = dbItem.Where(u => u.Email == model.To).ToList();
+            var count = test.Count();
+            if (test != null)
+            {
+                return Ok(test);
+
+
+            }
+            return BadRequest();
+
+
+        }
+
 
     }
 }

@@ -7,6 +7,7 @@
     <script>
         //display data in table
         function returnPaginationData() {
+            
             try {
                 $.ajax({
                     type: "GET",
@@ -40,14 +41,16 @@
         }
         //Search Bar Functionality
         function searchRecords() {
+            debugger
             let emailValue = $("#search").val();
             $.ajax({
                 type: "POST",
-                url: "/api/DbSearch/DatabaseSearch",
+                url: "/api/DbInfo/DatabaseSearch",
                 data: JSON.stringify({ "To": emailValue }),
                 dataType: "json",
                 contentType: 'application/json;charset=utf-8',
                 success: function (data) {
+                    $('#tBody').empty();
                     var trHTML = '';
                     for (var i = 0; i < data.length; i++) {
                         console.log(data[i].id);
@@ -76,6 +79,14 @@
         <input type="button" onclick="returnPaginationData()" value="Click to fetch records">
     </form>
     <br />
+
+    <!--Searh Functionality-->
+    <div class="bottomnav">
+        <label for="search">Search Email in the Record: </label>
+        <input type="text" placeholder="Search" name="search" id="search">
+        <input type="button" onclick="searchRecords()" value="submit">
+    </div>
+    <br />
     <hr />
     <table>
         <thead>
@@ -92,11 +103,6 @@
     <label id="all"></label>
     <!--Pagination Footer-->
     <!--ajax bata need to populate thhis a tag-->
-    <!--Searh Functionality-->
-    <div class="bottomnav">
-        <label for="search">Search Email in the Record: </label>
-        <input type="text" placeholder="Search" name="search" id="search">
-        <input type="button" onclick="searchRecords()" value="submit">
-    </div>
+
 </body>
 </html>
