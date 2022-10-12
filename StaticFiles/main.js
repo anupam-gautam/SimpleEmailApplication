@@ -1,4 +1,4 @@
-﻿function doRequest() {
+﻿    function doRequest() {
     let inputValue = $('#email').val();
     $.ajax({
         type: "POST",

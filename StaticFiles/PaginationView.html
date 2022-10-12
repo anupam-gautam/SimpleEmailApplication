@@ -4,81 +4,17 @@
     <meta charset="utf-8" />
     <link rel="stylesheet" href="main.css" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
-    <script>
-        //display data in table
-        function returnPaginationData() {
-            
-            try {
-                $.ajax({
-                    type: "GET",
-                    url: "/api/DbInfo/GetDbInfo",
-                    data: {
-                        "page": $('#pagetoload').val()
-                    },
-                    dataType: "json",
-                    contentType: 'application/json;charset=utf-8',
-                    success: function (data) {
-                        $('#tBody').empty();
-                        var trHTML = '';
-                        var i = 0;
-                        for (i = 0; i < 3; i++) {
-                            trHTML =
-                                '<tr><td>'
-                                + data.emailOtps[i].id
-                                + '</td><td>'
-                                + data.emailOtps[i].email
-                                + '</td><td>'
-                                + data.emailOtps[i].otp
-                                + '</td></tr>';
-
-                            $('#tBody').append(trHTML);
-                        }
-                    }
-                });
-            }
-            catch (err) {
-                console.log(err);
-            }
-        }
-        //Search Bar Functionality
-        function searchRecords() {
-            debugger
-            let emailValue = $("#search").val();
-            $.ajax({
-                type: "POST",
-                url: "/api/DbInfo/DatabaseSearch",
-                data: JSON.stringify({ "To": emailValue }),
-                dataType: "json",
-                contentType: 'application/json;charset=utf-8',
-                success: function (data) {
-                    $('#tBody').empty();
-                    var trHTML = '';
-                    for (var i = 0; i < data.length; i++) {
-                        console.log(data[i].id);
-                        trHTML +=
-                            '<tr><td>'
-                            + data[i].id
-                            + '</td><td>'
-                            + data[i].email
-                            + '</td><td>'
-                            + data[i].otp
-                            + '</td></tr>';
-                    }
-                    $('#tBody').append(trHTML);
-                }
-            });
-        }
-    </script>
+    <script src="PaginationViewScript.js"></script>
     <title></title>
 </head>
 <body>
     <h3>Email and OTP Table</h3>
-    <form>
+    <!--<form>
 
         <label>Page to Load</label>
         <input type="number" name="pagetoload" id="pagetoload" />
         <input type="button" onclick="returnPaginationData()" value="Click to fetch records">
-    </form>
+    </form>-->
     <br />
 
     <!--Searh Functionality-->
@@ -101,8 +37,14 @@
     </table>
     <br />
     <br />
-    <label id="all"></label>
+
     <!--Pagination Footer-->
+    <div class="pagination" id="pagination">
+
+        <!--<button onclick="returnPaginationData(1)">1</button>-->
+
+
+    </div>
     <!--ajax bata need to populate thhis a tag-->
 
 </body>
