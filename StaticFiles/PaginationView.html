@@ -2,12 +2,11 @@
 <html>
 <head>
     <meta charset="utf-8" />
+    <link rel="stylesheet" href="main.css" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
     <script>
-
-        
+        //display data in table
         function returnPaginationData() {
-
             try {
                 $.ajax({
                     type: "GET",
@@ -38,8 +37,32 @@
             catch (err) {
                 console.log(err);
             }
-
-
+        }
+        //Search Bar Functionality
+        function searchRecords() {
+            let emailValue = $("#search").val();
+            $.ajax({
+                type: "POST",
+                url: "/api/DbSearch/DatabaseSearch",
+                data: JSON.stringify({ "To": emailValue }),
+                dataType: "json",
+                contentType: 'application/json;charset=utf-8',
+                success: function (data) {
+                    var trHTML = '';
+                    for (var i = 0; i < data.length; i++) {
+                        console.log(data[i].id);
+                        trHTML +=
+                            '<tr><td>'
+                            + data[i].id
+                            + '</td><td>'
+                            + data[i].email
+                            + '</td><td>'
+                            + data[i].otp
+                            + '</td></tr>';
+                    }
+                    $('#tBody').append(trHTML);
+                }
+            });
         }
     </script>
     <title></title>
@@ -47,20 +70,14 @@
 <body>
     <h3>Email and OTP Table</h3>
     <form>
-                    
+
         <label>Page to Load</label>
         <input type="number" name="pagetoload" id="pagetoload" />
         <input type="button" onclick="returnPaginationData()" value="Click to fetch records">
     </form>
-
-
     <br />
     <hr />
-
-
     <table>
-
-
         <thead>
             <tr>
                 <th>Id</th>
@@ -70,6 +87,16 @@
         </thead>
         <tbody id="tBody"></tbody>
     </table>
-
+    <br />
+    <br />
+    <label id="all"></label>
+    <!--Pagination Footer-->
+    <!--ajax bata need to populate thhis a tag-->
+    <!--Searh Functionality-->
+    <div class="bottomnav">
+        <label for="search">Search Email in the Record: </label>
+        <input type="text" placeholder="Search" name="search" id="search">
+        <input type="button" onclick="searchRecords()" value="submit">
+    </div>
 </body>
 </html>
