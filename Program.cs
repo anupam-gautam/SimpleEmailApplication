@@ -8,6 +8,15 @@ using Microsoft.Extensions.FileProviders;
 
 var builder = WebApplication.CreateBuilder(args);
 
+
+//Google Login Auth Configuration 
+builder.Services.AddAuthentication().AddGoogle(googleoptions =>
+{
+    googleoptions.ClientId = "888792722174-ou49vl5oph7qf5f006o1e1rtpjjh39vn.apps.googleusercontent.com";
+    googleoptions.ClientSecret = "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";
+});
+
+
 // Add services to the container.
 
 //Add the database connection
@@ -33,7 +42,14 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<IEmailService, EmailService>();
 builder.Services.AddScoped<IOtpService, OtpService>();
 
+
+
+
+
 var app = builder.Build();
+
+
+
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

@@ -1,4 +1,5 @@
-﻿h2 {
+﻿h2,table {
+    justify-content: center;
     text-align: center;
     color: blue;
 }

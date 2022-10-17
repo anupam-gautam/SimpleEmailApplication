@@ -1,0 +1,43 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            debugger
+            if (sessionStorage.getItem("acces_Token") == null) {
+
+                debugger
+                if (location.hash) {
+                    if (location.hash.split('access_token')) {
+                        var access_Token = location.hash.split('access_token=')[1].split('&')[0];
+                        sessionStorage.setItem("acces_Token", access_Token);
+
+
+                        $.ajax({
+                            url: 'https://www/googleapis.com/oauth2/v1/userinfo?alt=json&access_token=' + access_Token,
+                        })
+                            .success(function (data) {
+                            sessionStorage.setItem('userName', data.email);
+                            $('#username').append(sessionStorage.getItem('userName'));
+                        });
+
+                    }
+                }
+                else {
+                    window.location.href = "https://localhost:7043/StaticFiles"
+                    alert("Access Token expired");
+                }
+
+
+            }
+
+        })
+    </script>
+</head>
+<body>
+    <h2>Test Redirect Page</h2>
+    <label id="username"></label>
+</body>
+</html>

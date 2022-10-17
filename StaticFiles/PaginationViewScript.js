@@ -11,8 +11,7 @@
         console.log(data.pages);
         for (var i = 0; i < data.pages; i++) {
             
-            btnHTML =
-                '<button onclick="returnPaginationData('+(i+1)+')">' + (i+1) + '</button>' + '</br>';
+            btnHTML = '<button onclick="returnPaginationData('+(i+1)+')">' + (i+1) + '</button>' + '</br>';
 
             $('#pagination').append(btnHTML);
         }
