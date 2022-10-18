@@ -1,28 +1,38 @@
-﻿$.ajax({
+﻿var page = 1;
+
+//Load the buttons to navigate the pages
+$.ajax({
     type: "GET",
     url: "/api/DbInfo/GetDbInfo",
     data: {
-        "page": 4
+        "page": page
     },
     dataType: "json",
     contentType: 'application/json;charset=utf-8',
     success: function (data) {
-        console.log(data.currentPages);
-        console.log(data.pages);
-        for (var i = 0; i < data.pages; i++) {
-            
-            btnHTML =
-                '<button onclick="returnPaginationData('+(i+1)+')">' + (i+1) + '</button>' + '</br>';
+        
+        firstBtnHTML = '<button onclick="returnPaginationData(' + page + ')">First</button>';
+        $('#pagination').append(firstBtnHTML);
 
-            $('#pagination').append(btnHTML);
-        }
+        //prevBtnHTML = '<button onclick="returnPaginationData(' + (page--) + ')">Previous</button>';
+        //$('#pagination').append(prevBtnHTML);
+
+        //nextBtnHTML = '<button onclick="returnPaginationData(' + (page++) + ')">Next</button>';
+        //$('#pagination').append(nextBtnHTML);
+
+        lastBtnHTML = '<button onclick="returnPaginationData(' + data.pages + ')">Last </button>';
+        $('#pagination').append(lastBtnHTML);
+        //for (var i = 0; i < data.pages; i++) {
+        //    btnHTML = '<button onclick="returnPaginationData(' + (i + 1) + ')">' + (i + 1) + '</button>' ;
+        //    $('#pagination').append(btnHTML);
+        //}
 
     }
 });
 
 //Search Bar Functionality
 function searchRecords() {
-    debugger
+
     let emailValue = $("#search").val();
     $.ajax({
         type: "POST",
@@ -34,7 +44,6 @@ function searchRecords() {
             $('#tBody').empty();
             var trHTML = '';
             for (var i = 0; i < data.length; i++) {
-                console.log(data[i].id);
                 trHTML +=
                     '<tr><td>'
                     + data[i].id
@@ -44,7 +53,9 @@ function searchRecords() {
                     + data[i].otp
                     + '</td></tr>';
             }
+
             $('#tBody').append(trHTML);
+
         }
     });
 }
@@ -61,10 +72,11 @@ function returnPaginationData(page) {
             dataType: "json",
             contentType: 'application/json;charset=utf-8',
             success: function (data) {
+                
                 $('#tBody').empty();
                 var trHTML = '';
                 var i = 0;
-                for (i = 0; i < 3; i++) {
+                for (i = 0; i < 10; i++) {
                     trHTML =
                         '<tr><td>'
                         + data.emailOtps[i].id
@@ -73,9 +85,24 @@ function returnPaginationData(page) {
                         + '</td><td>'
                         + data.emailOtps[i].otp
                         + '</td></tr>';
-
                     $('#tBody').append(trHTML);
+
                 }
+                $('#pagination').empty();
+
+                firstBtnHTML = '<button onclick="returnPaginationData(' + 1 + ')">' + 1 + '</button>';
+                $('#pagination').append(firstBtnHTML);
+
+                prevBtnHTML = '<button onclick="returnPaginationData(' + (page - 1) + ')">Previous</button>';
+                $('#pagination').append(prevBtnHTML);
+
+                nextBtnHTML = '<button onclick="returnPaginationData(' + (page + 1) + ')">Next</button>';
+                $('#pagination').append(nextBtnHTML);
+
+                lastBtnHTML = '<button onclick="returnPaginationData(' + data.pages + ')">' + data.pages + '</button>';
+                $('#pagination').append(lastBtnHTML);
+
+
 
             }
         });
@@ -83,4 +110,42 @@ function returnPaginationData(page) {
     catch (err) {
         console.log(err);
     }
+}
+
+
+//sort Jquery
+function sortValues() {
+    var column = $('#column').find('option:selected').text();
+    var isAscend = $('#isascend').val();
+    $.ajax({
+
+
+        type: "POST",
+        url: "/api/DbInfo/Sort",
+
+        data: JSON.stringify({ "Column": column, "IsAscend": isAscend }),
+        dataType: "json",
+        contentType: 'application/json;charset=utf-8',
+        success: function (data) {
+
+
+            console.log(data);
+
+            $('#tBody').empty();
+            var trHTML = '';
+            var i = 0;
+            for (i = 0; i < data.length; i++) {
+                trHTML =
+                    '<tr><td>'
+                    + data[i].id
+                    + '</td><td>'
+                    + data[i].email
+                    + '</td><td>'
+                    + data[i].otp
+                    + '</td></tr>';
+                $('#tBody').append(trHTML);
+            }
+        }
+    });
+
 }

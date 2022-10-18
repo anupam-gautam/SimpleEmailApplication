@@ -8,6 +8,23 @@ using Microsoft.Extensions.FileProviders;
 
 var builder = WebApplication.CreateBuilder(args);
 
+
+//Google and Facebook Login Auth Configuration 
+builder.Services.AddAuthentication().AddGoogle(googleoptions =>
+{
+    googleoptions.ClientId = "888792722174-ou49vl5oph7qf5f006o1e1rtpjjh39vn.apps.googleusercontent.com";
+    googleoptions.ClientSecret = "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";
+})
+.AddFacebook(facebookoptions =>
+{
+    facebookoptions.AppId = "1535037343619428";
+    facebookoptions.AppSecret = "513dc68ed1079eb25cec7b0952f3170c";
+})
+.AddGoogle(googleoptions =>
+{
+    googleoptions.ClientId = "888792722174-t937desh0knd6bojh43vmsvsqse4et3q.apps.googleusercontent.com";
+    googleoptions.ClientSecret = "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";
+});
 // Add services to the container.
 
 //Add the database connection
