@@ -1,0 +1,17 @@
+﻿<html>
+<body>
+    <div style="font: 14px/24px Verdana, Geneva, sans-serif;">
+        <b style="font-size: 16px;">Dear User,</b>
+        <br />
+        <br />
+        Please find the OTP for your reference
+        <br />
+        <b>OTP: </b>{otp}
+        
+        <div style="color: #AAA;">
+            ------------------------------------------------------------------------------
+            <br />
+            Please DO NOT reply this email.</div>
+    </div>
+</body>
+</html>

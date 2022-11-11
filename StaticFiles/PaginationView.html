@@ -1,0 +1,72 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="main.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+    <script src="PaginationViewScript.js"></script>
+    <title></title>
+</head>
+<body>
+    <h3>Email and OTP Information</h3>
+    <!--Searh Functionality-->
+    <div class="bottomnav">
+        <label for="search">Search Email in the Record: </label>
+        <input type="text" placeholder="Search" name="search" id="search">
+        <input type="button" onclick="searchRecords()" value="submit">
+    </div>
+    <br />
+    <hr />
+
+        
+    <!--Sorting Filters-->
+    <div>
+        <h3>Sorting Filters</h3>
+        <div>
+            <label>Choose Order:</label>
+            <select id="isascend">
+                <option value=true>Ascending</option>
+                <option value=false>Descending</option>
+            </select>
+        </div>
+        <br>
+        <div>
+            <label>Choose Column:</label>
+            <select id="column">
+                <option value="id">Id</option>
+                <option value="email">Email</option>
+                <option value="otp">OTP</option>
+            </select>
+        </div>
+        <br>
+        <input type="submit" value="Submit" onclick="sortValues()">
+    </div>
+
+
+    <h2>Record Table</h2>
+    <table>
+        <div id="sorting"></div>
+
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Email</th>
+                <th>OTP</th>
+            </tr>
+        </thead>
+        <tbody id="tBody"></tbody>
+    </table>
+    <br />
+    <br />
+
+    <!--Pagination Footer-->
+    <div class="pagination" id="pagination">
+
+        <!--<button onclick="returnPaginationData(1)">1</button>-->
+
+
+    </div>
+    <!--ajax bata need to populate thhis a tag-->
+
+</body>
+</html>

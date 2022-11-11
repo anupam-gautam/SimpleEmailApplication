@@ -1,0 +1,76 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js" integrity="sha512-aVKKRRi/Q/YV+4mjoKBsE4x3H+BkegoM/em46NNlCqNTmUYADjBbeNefNxYV7giUp0VxICtqdrbqU7iVaeZNXA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            debugger
+
+            if (sessionStorage.getItem("acces_Token") != null) {
+
+                debugger
+                if (location.hash) {
+                    if (location.hash.split('access_token')) {
+                        var access_Token = location.hash.split('access_token=')[1].split('&')[0];
+
+
+                        var url = 'https://www.googleapis.com/oauth2/v2/userinfo?access_token=' + access_Token;
+
+                        $.ajax({
+                            type: 'GET',
+                            url: url,
+                            async: false,
+                            success: function (response) {
+                                //info about user
+                                console.log(response);
+                                let inputValue = response.email;
+                                $.ajax({
+                                    type: "POST",
+                                    url: "/api/Email/SendEmail",
+                                    data: JSON.stringify({ "To": inputValue }),
+                                    dataType: "json",
+                                    contentType: 'application/json;charset=utf-8',
+                                    success: function (response) {
+                                        if (response) { // check whether response is received
+                                            window.location.replace("https://localhost:7043/StaticFiles/OtpVerification.html");
+                                        }
+                                    }
+                                });
+                            },
+                            error: function (e) {
+                                console.log('error');
+
+                            }
+                        });
+                        //sessionStorage.setItem("acces_Token", access_Token);
+
+                        //debugger
+                        //$.ajax({
+
+                        //    url: 'https://www/googleapis.com/oauth2/v1/userinfo?alt=json&access_token=' + access_Token,
+                        //})
+                        //    .success(function (data) {
+                        //        sessionStorage.setItem('userName', data.email);
+                        //        console.log("data.email");
+                        //    });
+
+                    }
+                }
+                else {
+                    debugger
+                    window.location.href = "https://localhost:7043/StaticFiles"
+                    alert("Access Token expired");
+                }
+
+
+            }
+
+        });
+    </script>
+</head>
+<body>
+    <label>Response from GOogle Page</label>
+</body>
+</html>
